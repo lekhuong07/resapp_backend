@@ -1,0 +1,9 @@
+Flask==1.1.2
+PyMongo==3.12.1
+dnspython==2.1.0
+python-dotenv==0.19.1
+email-validator==1.1.1
+argon2-cffi==21.1.0
+gunicorn
+zxcvbn~=4.4.28
+requests~=2.21.0
