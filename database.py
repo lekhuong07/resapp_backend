@@ -36,8 +36,8 @@ class Database(object):
         return Database.DATABASE[collection].update_many(filtered, query)
 
     @staticmethod
-    def delete_one(collection, filtered, query):
-        return Database.DATABASE[collection].delete_one(filtered, query)
+    def delete_one(collection, filtered):
+        return Database.DATABASE[collection].delete_one(filtered)
 
     @staticmethod
     def delete_many(collection, filtered, query):

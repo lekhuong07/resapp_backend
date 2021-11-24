@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 from dotenv import load_dotenv
-from flask import session
+from flask import session, render_template
 
 import api.authenticate
 import api.profile
@@ -11,6 +11,7 @@ import os
 from config import app
 from database import Database
 from models.mailgun import Mailgun
+from models.user import User
 
 load_dotenv()
 
@@ -26,22 +27,21 @@ def before_request():
     app.permanent_session_lifetime = timedelta(minutes=30)
 
 
+'''
 @app.route("/", methods=["GET", "POST"])
 def hello_world():
     print([e for e in app.db.entries.find({})])
     # app.db.entries.delete_many({"content": "resume-app"})
     return "Hello"
+'''
 
 
-@app.route("/fancy")
-def hello_fancy():
-    return """
-    <html>
-    <body>
-    
-    <h1> Greetings! </h1>
-    <p> Hello, world! <\p>
-    
-    </body>
-    </html>
-    """
+@app.route("/")
+def index():
+    return render_template('index.html')
+
+
+@app.route('/profile')  # profile page that return 'profile'
+def profile():
+    prof = User.get_profile()
+    return render_template('profile.html', name=prof[1]['name'])

@@ -7,3 +7,4 @@ argon2-cffi==21.1.0
 gunicorn
 zxcvbn~=4.4.28
 requests~=2.21.0
+uwsgi

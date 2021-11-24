@@ -153,10 +153,14 @@ class User(object):
     def add_application(cls, company, position):
         daytime = date.today().strftime("%m/%d/%Y")
         status = "initialized"  # 4 states: initialized, interviewed, accepted, denied
-        if 'email' in session:
-            email = session['email']
-        else:
-            return False, 'Need to login to do this function'
+        flag, user_data = User.get_profile()
+        if flag is False:
+            return False, "No profile found"
+
+        email = user_data['email']
+        application = user_data['application']
+        if len(application) > 100:
+            return False, "You have reached the limit in number of applications."
 
         apply = {
             "_id": uuid.uuid4().hex,
@@ -207,9 +211,11 @@ class User(object):
         if status == "success":
             new_status = "interviewed" if curr_status == 'initialized' else 'accepted'
             message = "Congratulations"
-        else:
+        elif status == "denied":
             new_status = 'denied'
             message = "Unfortunately"
+        else:
+            return False, "Not correct message"
 
         query = {'email': email, 'application._id': _id}, \
                 {'$set': {'application.$.details': [curr_data[0], curr_data[1], daytime, new_status]}}

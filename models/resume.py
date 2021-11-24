@@ -79,10 +79,10 @@ class Resume(object):
             return False, "No profile found"
 
         user_id = user_data['_id']
-        query = {'_id': resume_id, 'user_id': user_id}, {}
+        query = {'_id': resume_id, 'user_id': user_id}
         Database.delete_one(
             "resumes",
-            *query
+            query
         )
         return True, "Resume is deleted"
 

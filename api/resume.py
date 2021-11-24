@@ -161,7 +161,7 @@ def edit_skill():
     resume_id = request.args.get('resume_id')
     section_id = request.args.get('section_id')
     skill_id = request.args.get('skill_id')
-    flag, message = Experience.edit_experience(resume_id, section_id, skill_id, input_data)
+    flag, message = Skill.edit_skill(resume_id, section_id, skill_id, input_data)
 
     if flag:
         return jsonify({'success': True, 'message': message})
@@ -173,7 +173,7 @@ def delete_skill():
     resume_id = request.args.get('resume_id')
     section_id = request.args.get('section_id')
     skill_id = request.args.get('skill_id')
-    flag, message = Experience.delete_experience(resume_id, section_id, skill_id)
+    flag, message = Skill.delete_skill(resume_id, section_id, skill_id)
     if flag:
         return jsonify({'success': True, 'message': message})
     return jsonify({'success': False, 'message': message})
