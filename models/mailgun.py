@@ -9,7 +9,7 @@ class MailgunExceptionError(Exception):
 
 class Mailgun:
     FROM_TITLE = 'Reset password'
-    FROM_EMAIL = 'do-not-reply@sandboxa1837cf9d8d64ad893dbadf4d2102a4f.mailgun.org'
+    FROM_EMAIL = os.environ.get('FROM_EMAIL', None)
 
     @classmethod
     def send_mail(cls, email, subject, text, html=None):
