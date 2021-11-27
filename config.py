@@ -1,7 +1,10 @@
 import os
-
 from flask import Flask
 from pymongo import MongoClient
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 app = Flask(__name__)
 app._static_folder = os.path.abspath("static/")

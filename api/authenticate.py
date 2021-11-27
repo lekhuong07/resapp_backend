@@ -7,7 +7,7 @@ from models.helpers import generate_random_password
 from models.user import User
 
 
-@app.route('/login', methods=['GET', 'POST']) # define login page path
+@app.route('/login', methods=['GET', 'POST'])  # define login page path
 def login_user():
     if request.method == 'GET':  # if the request is a GET we return the login page
         return render_template('login.html')
