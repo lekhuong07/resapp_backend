@@ -100,7 +100,7 @@ def register_user():
                 return redirect(url_for('register_user'))
 
 
-@app.route('/api_logout')
+@app.route('/api_logout', methods=['POST'])
 def api_logout_user():
     User.logout()
     if session['email'] is None:
