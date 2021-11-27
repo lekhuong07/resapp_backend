@@ -100,6 +100,15 @@ def register_user():
                 return redirect(url_for('register_user'))
 
 
+@app.route('/api/logout')
+def api_logout_user():
+    User.logout()
+    if session['email'] is None:
+        return jsonify({'success': True, 'message': 'Successfully logout'})
+    else:
+        return jsonify({'success': False, 'message': 'Error when logging out'})
+
+
 @app.route('/logout')
 def logout_user():
     User.logout()
