@@ -12,27 +12,28 @@ from api import resume
 from api import helpers
 
 
-@app.before_first_request
-def initialize_database():
-    Database.initialize()
+def create_app():
+    @app.before_first_request
+    def initialize_database():
+        Database.initialize()
 
+    @app.before_request
+    def before_request():
+        session.permanent = True
+        app.permanent_session_lifetime = timedelta(minutes=30)
 
-@app.before_request
-def before_request():
-    session.permanent = True
-    app.permanent_session_lifetime = timedelta(minutes=30)
+    @app.route("/")
+    def index():
+        return render_template('index.html')
 
+    @app.route('/profile')  # profile page that return 'profile'
+    def profile():
+        prof = User.get_profile()
+        return render_template('profile.html', name=prof[1]['name'])
 
-@app.route("/")
-def index():
-    return render_template('index.html')
-
-
-@app.route('/profile')  # profile page that return 'profile'
-def profile():
-    prof = User.get_profile()
-    return render_template('profile.html', name=prof[1]['name'])
+    return app
 
 
 if __name__ == '__main__':
-    app.run()
+    fapp = create_app()
+    fapp.run()
