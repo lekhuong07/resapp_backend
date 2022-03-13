@@ -10,6 +10,7 @@ from api import authenticate
 from api import profile
 from api import resume
 from api import helpers
+from api import rec_api
 
 
 def create_app():

@@ -32,8 +32,8 @@ def add_resume():
     return jsonify({'success': False, 'message': message})
 
 
-@app.route('/resume/edit/<path:resume_id>', methods=['PUT'])
-def edit_resume(resume_id):
+@app.route('/resume/edit_title/<path:resume_id>', methods=['PUT'])
+def edit_title_resume(resume_id):
     input_data = request.json
     title = input_data['title']
     flag, message = Resume.change_title(resume_id, title)

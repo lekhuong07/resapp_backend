@@ -1,34 +1,7 @@
 from functools import wraps
 import re
 from flask import abort, jsonify, request
-
-
-def all_helper():
-    return None
-
-
-def requires_auth(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        raw_auth = request.headers.get('Authorization')
-        if raw_auth is None:
-            abort(400, {'debug': 'Authorization header missing'})
-
-        auth = re.search("Bearer (.*)", raw_auth)
-        if auth is None:
-            abort(400, {'debug': 'Unsupported authorization type'})
-
-        session_id = auth.group(1)
-        session = db.session.query(Session).filter(Session.session_id == session_id).limit(1).first()
-
-        if session is None or session.is_expired():
-            abort(401, {'message': 'Please login again', 'debug': 'Session key expired or does not exist'})
-
-        request.session = session
-        request.user = session.user
-        return func(*args, **kwargs)
-
-    return wrapper
+from models.resume import Resume
 
 
 def requires_json(func):
@@ -65,3 +38,7 @@ def validate_types(expected):
         return wrapper
 
     return _validate_types
+
+
+def get_resume_text():
+    flag, message = Resume.get_resume_from_session()
