@@ -1,4 +1,4 @@
-Flask==1.1.2
+Flask==2.0.3
 PyMongo>=3.12.1
 dnspython==2.1.0
 python-dotenv==0.19.1
