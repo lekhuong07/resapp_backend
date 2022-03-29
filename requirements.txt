@@ -10,4 +10,6 @@ python-docx>=0.8.11
 fuzzywuzzy>=0.18.0
 nlp>=0.4.0
 rake-nltk>=1.0.6
+urllib3>=1.21.1
+requests>=2.21.0
 gunicorn
