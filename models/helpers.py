@@ -29,8 +29,9 @@ def getText(filename):
     return '\n'.join(fullText)
 
 
-def parse_resume_to_str(resume_obj):
-    result = resume_obj.get('title', '') + "\n"
+def parse_resume_to_str(resume_obj, personal_statement):
+    result = personal_statement + "\n"
+    result += resume_obj.get('title', '') + "\n"
     sections = resume_obj.get('section', [])
     if len(sections) == 0:
         return result
