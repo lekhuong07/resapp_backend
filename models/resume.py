@@ -22,7 +22,7 @@ class Resume(object):
         self.section = [] if section is None else section
 
     @classmethod
-    def get_resume_from_session(cls, _id=None):
+    def get_resumes_from_session(cls, _id=None):
         flag, user_data = User.get_profile()
         if flag is False:
             return False, "No profile found"
@@ -48,7 +48,7 @@ class Resume(object):
             return False, "No profile found"
         user_id = user_data['_id']
 
-        flag, data = cls.get_resume_from_session()
+        flag, data = cls.get_resumes_from_session()
         if flag is False:
             return False, "No profile found"
         if len(data) == 4:

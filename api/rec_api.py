@@ -13,13 +13,13 @@ from gensim.summarization.summarizer import summarize
 """
 
 
-@app.route('/recommendation/get_text/', methods=['GET'])
+@app.route('/recommendation/get_resume_text/', methods=['GET'])
 def get_resume_text():
     resume_id = request.args.get('resume_id')
-    flag, message = Resume.get_resume_from_session(resume_id)
+    flag, message = Resume.get_resumes_from_session(resume_id)
     if flag:
         result = parse_resume_to_str(message['data'])
-
+        return jsonify({'success': False, 'message': result})
     return jsonify({'success': False, 'message': message})
 
 
@@ -37,7 +37,7 @@ def get_keyword_text():
 def get_similarity():
     input_data = request.json
     text_data = input_data['text']
-    flag, message = Resume.get_resume_from_session()
+    flag, message = Resume.get_resumes_from_session()
     if flag:
         return jsonify({'success': True, 'message': message})
     return jsonify({'success': False, 'message': message})

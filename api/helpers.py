@@ -41,4 +41,4 @@ def validate_types(expected):
 
 
 def get_resume_text():
-    flag, message = Resume.get_resume_from_session()
+    flag, message = Resume.get_resumes_from_session()

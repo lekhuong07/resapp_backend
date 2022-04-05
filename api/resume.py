@@ -7,7 +7,7 @@ from models.resume import Resume, Section, Experience, Skill
 
 @app.route('/resume/get_all', methods=['GET'])
 def get_all_resume():
-    flag, message = Resume.get_resume_from_session()
+    flag, message = Resume.get_resumes_from_session()
     if flag:
         return jsonify({'success': True, 'data': message})
     return jsonify({'success': False, 'data': message})
@@ -16,7 +16,7 @@ def get_all_resume():
 @app.route('/resume/get/', methods=['GET'])
 def get_resume():
     resume_id = request.args.get('resume_id')
-    flag, message = Resume.get_resume_from_session(resume_id)
+    flag, message = Resume.get_resumes_from_session(resume_id)
     if flag:
         return jsonify({'success': True, 'data': message})
     return jsonify({'success': False, 'message': message})
