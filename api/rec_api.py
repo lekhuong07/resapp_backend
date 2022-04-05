@@ -45,9 +45,9 @@ def get_similarity():
         similarity = [jd]
         for res in message:
             resume_text = parse_resume_to_str(res)
-            similarity.append(parse_resume_to_str(resume_text))
+            similarity.append(resume_text)
         cv = CountVectorizer()
         count_matrix = cv.fit_transform(similarity)
-
-        return jsonify({'success': True, 'message': [round(r, 2) for r in cosine_similarity(count_matrix)[0]*100]})
+        result = [str(round(r, 2)) + " %" for r in cosine_similarity(count_matrix)[0]*100]
+        return jsonify({'success': True, 'message': result[1:]})
     return jsonify({'success': False, 'message': message})
