@@ -18,7 +18,7 @@ def get_resume_text():
     resume_id = request.args.get('resume_id')
     flag, message = Resume.get_resumes_from_session(resume_id)
     if flag:
-        result = parse_resume_to_str(message['data'])
+        result = parse_resume_to_str(message)
         return jsonify({'success': False, 'message': result})
     return jsonify({'success': False, 'message': message})
 
