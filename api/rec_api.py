@@ -43,7 +43,7 @@ def get_similarity():
     if flag and len(message) > 0:
         jd = input_data['job_description']
         similarity = [jd]
-        for res in message['data']:
+        for res in message:
             resume_text = parse_resume_to_str(res)
             similarity.append(parse_resume_to_str(resume_text))
         cv = CountVectorizer()
