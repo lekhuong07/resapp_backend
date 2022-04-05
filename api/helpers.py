@@ -38,7 +38,3 @@ def validate_types(expected):
         return wrapper
 
     return _validate_types
-
-
-def get_resume_text():
-    flag, message = Resume.get_resumes_from_session()

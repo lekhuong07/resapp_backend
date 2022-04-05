@@ -4,6 +4,9 @@ from models.resume import Resume
 from flask import request, jsonify
 from config import app
 
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
 """
 !pip install nlp
 !pip install PyPDF2==1.26.0
@@ -19,7 +22,7 @@ def get_resume_text():
     flag, message = Resume.get_resumes_from_session(resume_id)
     if flag:
         result = parse_resume_to_str(message)
-        return jsonify({'success': False, 'message': result})
+        return jsonify({'success': True, 'message': result})
     return jsonify({'success': False, 'message': message})
 
 
@@ -36,8 +39,15 @@ def get_keyword_text():
 @app.route('/recommendation/similarity/', methods=['GET'])
 def get_similarity():
     input_data = request.json
-    text_data = input_data['text']
     flag, message = Resume.get_resumes_from_session()
-    if flag:
-        return jsonify({'success': True, 'message': message})
+    if flag and len(message) > 0:
+        jd = input_data['job_description']
+        similarity = [jd]
+        for res in message['data']:
+            resume_text = parse_resume_to_str(res)
+            similarity.append(parse_resume_to_str(resume_text))
+        cv = CountVectorizer()
+        count_matrix = cv.fit_transform(similarity)
+
+        return jsonify({'success': True, 'message': [round(r, 2) for r in cosine_similarity(count_matrix)[0]*100]})
     return jsonify({'success': False, 'message': message})
