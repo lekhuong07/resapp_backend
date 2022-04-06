@@ -41,7 +41,7 @@ def get_keyword_text():
     return jsonify({'success': False, 'message': message})
 
 
-@app.route('/recommendation/similarity/', methods=['PUT'])
+@app.route('/recommendation/similarity/', methods=['POST'])
 def get_similarity():
     input_data = request.json
     flag_profile, message_profile = User.get_profile()
