@@ -50,23 +50,25 @@ def get_similarity():
         if flag:
             if len(message) > 0:
                 jd = input_data['job_description']
-                flag, words = get_keywords(jd)
+                flag_words, words = get_keywords(jd)
+                if not flag_words:
+                    return jsonify({'success': False, 'message': words})
                 keywords = []
                 for w in words:
-                    keywords.append(str(w[0]) + w[1])
-                if not flag:
-                    return jsonify({'success': False, 'message': message})
+                    keywords.append(str(w[0]) + " " + w[1])
                 similarity = [jd]
+                titles = []
                 for res in message:
                     resume_text = parse_resume_to_str(res, message_profile["ps"])
+                    titles.append(res["title"])
                     similarity.append(resume_text)
                 cv = CountVectorizer()
                 count_matrix = cv.fit_transform(similarity)
-                result = [str(round(r, 2)) + " %" for r in cosine_similarity(count_matrix)[0]*100]
+                result = [str(round(r, 2)) + " %" for r in cosine_similarity(count_matrix)[0]*100][1:]
                 results = []
                 for i, r in enumerate(result):
-                    results.append(similarity[i+1]["title"] + " " + r)
-                return jsonify({'success': True, 'message': {"keywords": keywords, "similarity": result[1:]}})
+                    results.append(titles[i] + ": " + r)
+                return jsonify({'success': True, 'message': {"keywords": keywords, "similarity": results}})
             return jsonify({'success': False, 'message': "No experiences to parse"})
         return jsonify({'success': False, 'message': message})
     return jsonify({'success': False, 'message': message_profile})
