@@ -55,7 +55,7 @@ def get_similarity():
                     return jsonify({'success': False, 'message': words})
                 keywords = []
                 for w in words:
-                    keywords.append(str(w[0]) + " " + w[1])
+                    keywords.append(str(w[0]) + ": " + w[1])
                 similarity = [jd]
                 titles = []
                 for res in message:
